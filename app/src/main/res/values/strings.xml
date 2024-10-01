@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="register_name">Введите имя</string>
+    <string name="register_password">Введите пароль</string>
+    <string name="register_birthday">Введите дату рождение</string>
+    <string name="authorization_question">У вас есть аккаунт ?</string>
+    <string name="authorization_transition">Авторизоваться</string>
+    <string name="registration_question">У вас нет аккаунта ?</string>
+    <string name="registration_transition">Зарегестрироваться</string>
+    <string name="username">Имя: %s</string>
+    <string name="birthday">Дата рождения: %s</string>
+    <string name="register_date">Дата регистрации: %s</string>
+    <string name="delete_button">Удалить аккаунт</string>
+</resources>
