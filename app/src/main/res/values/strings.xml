@@ -2,7 +2,7 @@
     <string name="app_name">Test</string>
     <string name="register_name">Введите имя</string>
     <string name="register_password">Введите пароль</string>
-    <string name="register_birthday">Введите дату рождение</string>
+    <string name="register_birthday">Введите дату рождения</string>
     <string name="authorization_question">У вас есть аккаунт ?</string>
     <string name="authorization_transition">Авторизоваться</string>
     <string name="registration_question">У вас нет аккаунта ?</string>
@@ -11,4 +11,9 @@
     <string name="birthday">Дата рождения: %s</string>
     <string name="register_date">Дата регистрации: %s</string>
     <string name="delete_button">Удалить аккаунт</string>
+    <string name="fail_auth">Неправильное имя или пароль</string>
+    <string name="fail_registration">Имя пользователя занято</string>
+    <string name="empty_registration_data">Одно или несколько полей пусты</string>
+    <string name="authorized_user">Авторизовавшийся пользователь</string>
+    <string name="logout_button">Выйти из аккаунта</string>
 </resources>

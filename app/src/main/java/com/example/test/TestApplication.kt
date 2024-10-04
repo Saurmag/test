@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.test.manualdi.DefaultAppContainer
 
 class TestApplication : Application() {
-    var _appContainer: DefaultAppContainer? = null
+    private var _appContainer: DefaultAppContainer? = null
     val appContainer: DefaultAppContainer
         get() = checkNotNull(_appContainer)
 

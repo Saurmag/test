@@ -1,13 +1,15 @@
 package com.example.test.data
 
 import com.example.test.data.database.UserDao
-import com.example.test.data.database.UserEntity
+import com.example.test.data.database.entity.LoggedEntity
+import com.example.test.data.database.entity.UserEntity
 import com.example.test.entity.User
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
 class UserRepositoryImpl(
@@ -27,21 +29,46 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun deleteUser(user: User) {
-        val userEntity = user.mapToUserEntity()
+    override fun deleteUser(authorizedUsername: String, deletedUsername: String) {
         configuration.scope.launch(context = configuration.dispatcher) {
-            userDao.deleteUser(userEntity)
+            userDao.deleteUser(authorizedUsername, deletedUsername)
         }
     }
 
-    override fun validateUser(user: User): Deferred<Boolean> {
+    override fun validateUser(name: String, password: String): Deferred<Boolean> {
         val isCorrect: Deferred<Boolean> =
             configuration.scope.async(configuration.dispatcher) {
-                val userFromDb = userDao.loadUser(name = user.name)
-                if (userFromDb.password == user.password) true
-                else false
+                userDao.validateUser(name, password)
             }
         return isCorrect
+    }
+
+    override fun getLoggedUsername(): Flow<String?> =
+        userDao.loadLoggedUsername()
+
+    override fun loginUser(name: String) {
+        val loggedEntity = LoggedEntity(0, name)
+        configuration.scope.launch(context = configuration.dispatcher) {
+            userDao.insertLogged(loggedEntity)
+        }
+    }
+
+    override fun logoutUser() {
+        configuration.scope.launch(context = configuration.dispatcher) {
+            userDao.deleteLogged()
+        }
+    }
+
+    override fun userIsLogged(): Flow<Boolean> =
+        userDao.checkLogged()
+
+
+    override fun checkUsername(name: String): Deferred<Boolean> {
+        val isBusy: Deferred<Boolean> =
+            configuration.scope.async(configuration.dispatcher) {
+                userDao.checkUsernameExist(name)
+            }
+        return isBusy
     }
 
     private fun User.mapToUserEntity() =
