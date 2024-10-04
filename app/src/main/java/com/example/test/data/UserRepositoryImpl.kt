@@ -7,9 +7,7 @@ import com.example.test.entity.User
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
 class UserRepositoryImpl(
@@ -29,9 +27,9 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun deleteUser(authorizedUsername: String, deletedUsername: String) {
+    override fun deleteUser(nameLoggedUser: String, nameDeletedUser: String) {
         configuration.scope.launch(context = configuration.dispatcher) {
-            userDao.deleteUser(authorizedUsername, deletedUsername)
+            userDao.deleteUser(nameLoggedUser, nameDeletedUser)
         }
     }
 
